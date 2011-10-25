@@ -171,7 +171,7 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable{
     private void attemptGet(){
         LOGGER.info("running attemptGet()...");
         resultGetter.setIcon(new ImageIcon("src/main/resources/images/rla.png"));
-        while(isAvailable() == false){
+        while(notAvailable()){
             resultGetter.setVisible(true);
             resultGetter.setVisible(false);
         }
@@ -230,8 +230,8 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable{
         resultGetter.setVisible(false);
     }
 
-    public boolean isAvailable() {
-        return available;
+    private boolean notAvailable() {
+        return available == false;
     }
 
     public JEditorPane getCodeArea() {
