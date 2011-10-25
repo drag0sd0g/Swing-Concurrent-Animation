@@ -46,7 +46,7 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable{
     public static final int RESULT_GETTER_HEIGHT = 50;
 
     // Logger
-    private static final Logger logger = Logger.getLogger(SwingFrameFuture.class);
+    private static final Logger LOGGER = Logger.getLogger(SwingFrameFuture.class);
 
     private JEditorPane codeArea;
     private JLabel taskSubmitter;
@@ -67,9 +67,8 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable{
      */
     public SwingFrameFuture(){
         BasicConfigurator.configure();            // log4j configuration
-        logger.info("initializing frame...");
         init();
-        setTitle("Future result example");        // set frame title
+        setTitle("Future<V> Example");        // set frame title
         available = false;
     }
 
@@ -83,6 +82,7 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable{
      * Initializes all frame components & string properties
      */
     private void init(){
+        LOGGER.info("initializing components...");
         initProperties();
         initCodeArea();
         initTaskSubmitter();
@@ -94,15 +94,16 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable{
      * Initializes properties
      */
     private void initProperties(){
-       Properties prop = new Properties();
-    	try {
-       		prop.load(new FileInputStream("src/main/resources/properties/FutureCodeProperties"));
+        LOGGER.info("initializing properties...");
+        Properties prop = new Properties();
+        try {
+            prop.load(new FileInputStream("src/main/resources/properties/FutureCodeProperties"));
             initialCode = prop.getProperty("initialCode");
             startExecutionBoldCode = prop.getProperty("startExecutionBoldCode");
             waitForResultCode = prop.getProperty("waitForResultCode");
             getFutureCode = prop.getProperty("getFutureCode");
-    	} catch (IOException ex) {
-    		logger.error(ex.getMessage());
+        } catch (IOException ex) {
+            LOGGER.error(ex.getMessage());
         }
     }
 
@@ -110,6 +111,7 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable{
      * Initializes the code area
      */
     private void initCodeArea(){
+        LOGGER.info("initializing code area...");
         codeArea = new JEditorPane("text/html","");
         codeArea.setText(initialCode);
         codeArea.setBounds(CODE_AREA_X,CODE_AREA_Y,CODE_AREA_WIDTH,CODE_AREA_HEIGHT);
@@ -122,54 +124,57 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable{
      * Initializes future task submission animation area
      */
     private void initTaskSubmitter(){
-       taskSubmitter = new JLabel();
-       taskSubmitter.setIcon(new ImageIcon("src/main/resources/images/ra.gif"));
-       taskSubmitter.setBounds(TASK_SUBMITTER_X,TASK_SUBMITTER_Y,TASK_SUBMITTER_WIDTH,TASK_SUBMITTER_HEIGHT);
-       taskSubmitter.setVisible(true);
-       add(taskSubmitter);
-       taskSubmitterInfo = new JLabel("submitting task to executor");
-       taskSubmitterInfo.setBounds(TASK_SUBMITTER_INFO_X,TASK_SUBMITTER_INFO_Y,TASK_SUBMITTER_INFO_WIDTH,TASK_SUBMITTER_INFO_HEIGHT);
-       taskSubmitterInfo.setVisible(true);
-       add(taskSubmitterInfo);
+        LOGGER.info("initializing task submitter...");
+        taskSubmitter = new JLabel();
+        taskSubmitter.setIcon(new ImageIcon("src/main/resources/images/ra.gif"));
+        taskSubmitter.setBounds(TASK_SUBMITTER_X,TASK_SUBMITTER_Y,TASK_SUBMITTER_WIDTH,TASK_SUBMITTER_HEIGHT);
+        taskSubmitter.setVisible(true);
+        add(taskSubmitter);
+        taskSubmitterInfo = new JLabel("submitting task to executor");
+        taskSubmitterInfo.setBounds(TASK_SUBMITTER_INFO_X,TASK_SUBMITTER_INFO_Y,TASK_SUBMITTER_INFO_WIDTH,TASK_SUBMITTER_INFO_HEIGHT);
+        taskSubmitterInfo.setVisible(true);
+        add(taskSubmitterInfo);
     }
 
     /**
      * Initializes thread pool animation area
      */
     private void initThreadPool(){
-       threadPool = new JLabel();
-       threadPool.setIcon(new ImageIcon("src/main/resources/images/loading.gif"));
-       threadPool.setBounds(THREAD_POOL_X,THREAD_POOL_Y,THREAD_POOL_WIDTH,THREAD_POOL_HEIGHT);
-       threadPool.setVisible(false);
-       add(threadPool);
-       threadPoolInfo = new JLabel("waiting for task to complete (future not available yet)");
-       threadPoolInfo.setBounds(THREAD_POOL_INFO_X,THREAD_POOL_INFO_Y,THREAD_POOL_INFO_WIDTH,THREAD_POOL_INFO_HEIGHT);
-       threadPoolInfo.setVisible(false);
-       add(threadPoolInfo);
+        LOGGER.info("initializing thread pool...");
+        threadPool = new JLabel();
+        threadPool.setIcon(new ImageIcon("src/main/resources/images/loading.gif"));
+        threadPool.setBounds(THREAD_POOL_X,THREAD_POOL_Y,THREAD_POOL_WIDTH,THREAD_POOL_HEIGHT);
+        threadPool.setVisible(false);
+        add(threadPool);
+        threadPoolInfo = new JLabel("waiting for task to complete (future not available yet)");
+        threadPoolInfo.setBounds(THREAD_POOL_INFO_X,THREAD_POOL_INFO_Y,THREAD_POOL_INFO_WIDTH,THREAD_POOL_INFO_HEIGHT);
+        threadPoolInfo.setVisible(false);
+        add(threadPoolInfo);
     }
 
     /**
      * Initializes the obtaining of the future result animation area
      */
     private void initResultGetter(){
-       resultGetter = new JLabel();
-       resultGetter.setIcon(new ImageIcon("src/main/resources/images/rla.png"));
-       resultGetter.setBounds(RESULT_GETTER_X,RESULT_GETTER_Y,RESULT_GETTER_WIDTH,RESULT_GETTER_HEIGHT);
-       resultGetter.setVisible(false);
-       add(resultGetter);
+        LOGGER.info("initializing result getter");
+        resultGetter = new JLabel();
+        resultGetter.setIcon(new ImageIcon("src/main/resources/images/rla.png"));
+        resultGetter.setBounds(RESULT_GETTER_X,RESULT_GETTER_Y,RESULT_GETTER_WIDTH,RESULT_GETTER_HEIGHT);
+        resultGetter.setVisible(false);
+        add(resultGetter);
     }
 
-     /**
+    /**
      * Simulates the attempt of retrieving a Future result while it has not finished being processed. Graphically, it is
      * the left red arrow trying to obtain the result from the thread pool
      */
     private void attemptGet(){
-        logger.info("running attemptGet()...");
+        LOGGER.info("running attemptGet()...");
         resultGetter.setIcon(new ImageIcon("src/main/resources/images/rla.png"));
-          while(isAvailable() == false){
-              resultGetter.setVisible(true);
-              resultGetter.setVisible(false);
-          }
+        while(isAvailable() == false){
+            resultGetter.setVisible(true);
+            resultGetter.setVisible(false);
+        }
         resultGetter.setIcon(new ImageIcon("src/main/resources/images/ra.gif"));
         resultGetter.setVisible(true);
         taskSubmitter.setVisible(false);
@@ -182,10 +187,10 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable{
      */
 
     private void submitToExecutorService(){
-             logger.info("running submitToExecutorService()...");
-             codeArea.setText(startExecutionBoldCode);
-             taskSubmitterInfo.setVisible(true);
-             animateLeftToRight(taskSubmitter,TASK_SUBMITTER_INFO_X,200,10);
+        LOGGER.info("running submitToExecutorService()...");
+        codeArea.setText(startExecutionBoldCode);
+        taskSubmitterInfo.setVisible(true);
+        animateLeftToRight(taskSubmitter,TASK_SUBMITTER_INFO_X,200,10);
     }
 
     /**
@@ -194,20 +199,20 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable{
      */
 
     private void threadPoolComputation(){
-        logger.info("running threadPoolComputation");
+        LOGGER.info("running threadPoolComputation");
         codeArea.setText(waitForResultCode);
         threadPool.setVisible(true);
         taskSubmitterInfo.setVisible(false);
         threadPoolInfo.setVisible(true);
         new Thread(new Runnable() {
             public void run() {
-               attemptGet();
+                attemptGet();
             }
         }).start();
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
         available = true;
         threadPool.setIcon(new ImageIcon("src/main/resources/images/tick.jpg"));
@@ -218,11 +223,11 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable{
      * (i.e. the green arrow moving right with the result, starting from the thread pool)
      */
     private void retrieveResult(){
-          logger.info("running retrieveResult()");
-          codeArea.setText(getFutureCode);
-          threadPoolInfo.setText("retrieving result");
-          animateLeftToRight(resultGetter,RESULT_GETTER_X,500,10);
-          resultGetter.setVisible(false);
+        LOGGER.info("running retrieveResult()");
+        codeArea.setText(getFutureCode);
+        threadPoolInfo.setText("retrieving result");
+        animateLeftToRight(resultGetter,RESULT_GETTER_X,500,10);
+        resultGetter.setVisible(false);
     }
 
     public boolean isAvailable() {
@@ -276,15 +281,16 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable{
      * @param endPosition final pixel position on the X axis
      * @param stepRate how many pixels at a time the object will advance
      */
+    @Override
     public void animateLeftToRight(JComponent component, int startPosition, int endPosition, int stepRate) {
         for(int i=startPosition;i<=endPosition;i+=stepRate){
-                 try {
-                     Thread.sleep(100);
-                 } catch (InterruptedException e) {
-                     logger.error(e.getMessage());
-                 }
-                 component.setBounds(i,component.getY(),component.getWidth(),component.getHeight());
-             }
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                LOGGER.error(e.getMessage());
+            }
+            component.setBounds(i,component.getY(),component.getWidth(),component.getHeight());
+        }
     }
 
 }
