@@ -66,9 +66,35 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable{
      * Public no-arg constructor
      */
     public SwingFrameFuture(){
-        BasicConfigurator.configure();
+        BasicConfigurator.configure();            // log4j configuration
         logger.info("initializing frame...");
-        Properties prop = new Properties();
+        init();
+        setTitle("Future result example");        // set frame title
+        available = false;
+    }
+
+    public void beginAnimation(){
+        this.submitToExecutorService();
+        this.threadPoolComputation();
+        this.retrieveResult();
+    }
+
+    /**
+     * Initializes all frame components & string properties
+     */
+    private void init(){
+        initProperties();
+        initCodeArea();
+        initTaskSubmitter();
+        initThreadPool();
+        initResultGetter();
+    }
+
+    /**
+     * Initializes properties
+     */
+    private void initProperties(){
+       Properties prop = new Properties();
     	try {
        		prop.load(new FileInputStream("src/main/resources/properties/FutureCodeProperties"));
             initialCode = prop.getProperty("initialCode");
@@ -78,48 +104,59 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable{
     	} catch (IOException ex) {
     		logger.error(ex.getMessage());
         }
+    }
+
+    /**
+     * Initializes the code area
+     */
+    private void initCodeArea(){
         codeArea = new JEditorPane("text/html","");
         codeArea.setText(initialCode);
         codeArea.setBounds(CODE_AREA_X,CODE_AREA_Y,CODE_AREA_WIDTH,CODE_AREA_HEIGHT);
         codeArea.setVisible(true);
         add(codeArea);
-
-         taskSubmitter = new JLabel();
-         taskSubmitter.setIcon(new ImageIcon("src/main/resources/images/ra.gif"));
-         taskSubmitter.setBounds(TASK_SUBMITTER_X,TASK_SUBMITTER_Y,TASK_SUBMITTER_WIDTH,TASK_SUBMITTER_HEIGHT);
-         taskSubmitter.setVisible(true);
-         add(taskSubmitter);
-
-         taskSubmitterInfo = new JLabel("submitting task to executor");
-         taskSubmitterInfo.setBounds(TASK_SUBMITTER_INFO_X,TASK_SUBMITTER_INFO_Y,TASK_SUBMITTER_INFO_WIDTH,TASK_SUBMITTER_INFO_HEIGHT);
-         taskSubmitterInfo.setVisible(true);
-         add(taskSubmitterInfo);
-
-         threadPool = new JLabel();
-         threadPool.setIcon(new ImageIcon("src/main/resources/images/loading.gif"));
-         threadPool.setBounds(THREAD_POOL_X,THREAD_POOL_Y,THREAD_POOL_WIDTH,THREAD_POOL_HEIGHT);
-         threadPool.setVisible(false);
-         add(threadPool);
-
-         threadPoolInfo = new JLabel("waiting for task to complete (future not available yet)");
-         threadPoolInfo.setBounds(THREAD_POOL_INFO_X,THREAD_POOL_INFO_Y,THREAD_POOL_INFO_WIDTH,THREAD_POOL_INFO_HEIGHT);
-         threadPoolInfo.setVisible(false);
-         add(threadPoolInfo);
-
-         resultGetter = new JLabel();
-         resultGetter.setIcon(new ImageIcon("src/main/resources/images/rla.png"));
-         resultGetter.setBounds(RESULT_GETTER_X,RESULT_GETTER_Y,RESULT_GETTER_WIDTH,RESULT_GETTER_HEIGHT);
-         resultGetter.setVisible(false);
-         add(resultGetter);
-
-         setTitle("Future result example");
-         available = false;
     }
 
-    public void beginAnimation(){
-        this.submitToExecutorService();
-        this.threadPoolComputation();
-        this.retrieveResult();
+
+    /**
+     * Initializes future task submission animation area
+     */
+    private void initTaskSubmitter(){
+       taskSubmitter = new JLabel();
+       taskSubmitter.setIcon(new ImageIcon("src/main/resources/images/ra.gif"));
+       taskSubmitter.setBounds(TASK_SUBMITTER_X,TASK_SUBMITTER_Y,TASK_SUBMITTER_WIDTH,TASK_SUBMITTER_HEIGHT);
+       taskSubmitter.setVisible(true);
+       add(taskSubmitter);
+       taskSubmitterInfo = new JLabel("submitting task to executor");
+       taskSubmitterInfo.setBounds(TASK_SUBMITTER_INFO_X,TASK_SUBMITTER_INFO_Y,TASK_SUBMITTER_INFO_WIDTH,TASK_SUBMITTER_INFO_HEIGHT);
+       taskSubmitterInfo.setVisible(true);
+       add(taskSubmitterInfo);
+    }
+
+    /**
+     * Initializes thread pool animation area
+     */
+    private void initThreadPool(){
+       threadPool = new JLabel();
+       threadPool.setIcon(new ImageIcon("src/main/resources/images/loading.gif"));
+       threadPool.setBounds(THREAD_POOL_X,THREAD_POOL_Y,THREAD_POOL_WIDTH,THREAD_POOL_HEIGHT);
+       threadPool.setVisible(false);
+       add(threadPool);
+       threadPoolInfo = new JLabel("waiting for task to complete (future not available yet)");
+       threadPoolInfo.setBounds(THREAD_POOL_INFO_X,THREAD_POOL_INFO_Y,THREAD_POOL_INFO_WIDTH,THREAD_POOL_INFO_HEIGHT);
+       threadPoolInfo.setVisible(false);
+       add(threadPoolInfo);
+    }
+
+    /**
+     * Initializes the obtaining of the future result animation area
+     */
+    private void initResultGetter(){
+       resultGetter = new JLabel();
+       resultGetter.setIcon(new ImageIcon("src/main/resources/images/rla.png"));
+       resultGetter.setBounds(RESULT_GETTER_X,RESULT_GETTER_Y,RESULT_GETTER_WIDTH,RESULT_GETTER_HEIGHT);
+       resultGetter.setVisible(false);
+       add(resultGetter);
     }
 
      /**
