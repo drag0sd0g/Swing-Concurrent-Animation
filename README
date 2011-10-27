@@ -1,6 +1,7 @@
 This project aims to illustrate using Swing animations the behaviour of some of the newer components in the
 java.util.concurrent package introduced in JDK 1.5 and improved in versions 1.6 and 1.7. Specifically, there will be
 demonstrations for:
+
 - Executors
   - FixedThreadPool
   - CachedThreadPool
@@ -15,5 +16,6 @@ demonstrations for:
 - Phaser
 - BlockingQueue
 - AtomicInteger
-- [...possibly more...]
+- [...more TBA...]
+
 The project at hand is brought to you by http://teamsparq.net/
