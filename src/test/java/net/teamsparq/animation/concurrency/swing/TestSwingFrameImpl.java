@@ -13,9 +13,13 @@ public class TestSwingFrameImpl {
     }
 
     @Test
+    /**
+     * Check whether the main frame's width and height have been properly initialized with the defaults from the
+     * SwingFrameInterface
+     */
     public void checkMainFrameBoundaries(){
-        assertEquals(600,swingFrame.getWidth());
-        assertEquals(600,swingFrame.getHeight());
+        assertEquals(SwingFrameInterface.FRAME_WIDTH,swingFrame.getWidth());
+        assertEquals(SwingFrameInterface.FRAME_HEIGHT,swingFrame.getHeight());
     }
 
 }
