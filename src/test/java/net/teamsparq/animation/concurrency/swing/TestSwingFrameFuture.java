@@ -12,7 +12,7 @@ import java.util.Properties;
 
 public class TestSwingFrameFuture {
   private SwingFrameFuture sff;
-  Properties properties;
+  private Properties properties;
 
   @Before
   public void setUp() {
