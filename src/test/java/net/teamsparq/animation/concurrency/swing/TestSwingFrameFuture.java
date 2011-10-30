@@ -25,7 +25,7 @@ public class TestSwingFrameFuture {
         BasicConfigurator.configure();
         properties = new Properties();
         try {
-            properties.load(new FileInputStream("src/main/resources/properties/FutureCodeProperties"));
+            properties.load(new FileInputStream("src/main/resources/FutureCodeProperties"));
         } catch (IOException ex) {
           logger.error("Properties have not been read due to an IOException. TestSwingFrameFuture failed.");
           System.exit(0);
