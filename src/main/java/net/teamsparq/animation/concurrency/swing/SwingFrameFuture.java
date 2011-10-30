@@ -8,7 +8,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-public class SwingFrameFuture extends SwingFrameImpl implements Animatable{
+public class SwingFrameFuture extends SwingFrameImpl implements Animatable {
     // code area coordinates
     public static final int CODE_AREA_X = 0;
     public static final int CODE_AREA_Y = 0;
@@ -65,14 +65,14 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable{
     /**
      * Public no-arg constructor
      */
-    public SwingFrameFuture(){
+    public SwingFrameFuture() {
         BasicConfigurator.configure();            // log4j configuration
         init();
         setTitle("Future<V> Example");        // set frame title
         available = false;
     }
 
-    public void beginAnimation(){
+    public void beginAnimation() {
         this.submitToExecutorService();
         this.threadPoolComputation();
         this.retrieveResult();
@@ -81,7 +81,7 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable{
     /**
      * Initializes all frame components & string properties
      */
-    private void init(){
+    private void init() {
         LOGGER.info("initializing components...");
         initProperties();
         initCodeArea();
@@ -93,7 +93,7 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable{
     /**
      * Initializes properties
      */
-    private void initProperties(){
+    private void initProperties() {
         LOGGER.info("initializing properties...");
         Properties prop = new Properties();
         try {
@@ -111,11 +111,11 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable{
     /**
      * Initializes the code area
      */
-    private void initCodeArea(){
+    private void initCodeArea() {
         LOGGER.info("initializing code area...");
-        codeArea = new JEditorPane("text/html","");
+        codeArea = new JEditorPane("text/html", "");
         codeArea.setText(initialCode);
-        codeArea.setBounds(CODE_AREA_X,CODE_AREA_Y,CODE_AREA_WIDTH,CODE_AREA_HEIGHT);
+        codeArea.setBounds(CODE_AREA_X, CODE_AREA_Y, CODE_AREA_WIDTH, CODE_AREA_HEIGHT);
         codeArea.setVisible(true);
         add(codeArea);
     }
@@ -124,15 +124,15 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable{
     /**
      * Initializes future task submission animation area
      */
-    private void initTaskSubmitter(){
+    private void initTaskSubmitter() {
         LOGGER.info("initializing task submitter...");
         taskSubmitter = new JLabel();
         taskSubmitter.setIcon(new ImageIcon("src/main/resources/images/ra.gif"));
-        taskSubmitter.setBounds(TASK_SUBMITTER_X,TASK_SUBMITTER_Y,TASK_SUBMITTER_WIDTH,TASK_SUBMITTER_HEIGHT);
+        taskSubmitter.setBounds(TASK_SUBMITTER_X, TASK_SUBMITTER_Y, TASK_SUBMITTER_WIDTH, TASK_SUBMITTER_HEIGHT);
         taskSubmitter.setVisible(true);
         add(taskSubmitter);
         taskSubmitterInfo = new JLabel("submitting task to executor");
-        taskSubmitterInfo.setBounds(TASK_SUBMITTER_INFO_X,TASK_SUBMITTER_INFO_Y,TASK_SUBMITTER_INFO_WIDTH,TASK_SUBMITTER_INFO_HEIGHT);
+        taskSubmitterInfo.setBounds(TASK_SUBMITTER_INFO_X, TASK_SUBMITTER_INFO_Y, TASK_SUBMITTER_INFO_WIDTH, TASK_SUBMITTER_INFO_HEIGHT);
         taskSubmitterInfo.setVisible(true);
         add(taskSubmitterInfo);
     }
@@ -140,15 +140,15 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable{
     /**
      * Initializes thread pool animation area
      */
-    private void initThreadPool(){
+    private void initThreadPool() {
         LOGGER.info("initializing thread pool...");
         threadPool = new JLabel();
         threadPool.setIcon(new ImageIcon("src/main/resources/images/loading.gif"));
-        threadPool.setBounds(THREAD_POOL_X,THREAD_POOL_Y,THREAD_POOL_WIDTH,THREAD_POOL_HEIGHT);
+        threadPool.setBounds(THREAD_POOL_X, THREAD_POOL_Y, THREAD_POOL_WIDTH, THREAD_POOL_HEIGHT);
         threadPool.setVisible(false);
         add(threadPool);
         threadPoolInfo = new JLabel("waiting for task to complete (future not available yet)");
-        threadPoolInfo.setBounds(THREAD_POOL_INFO_X,THREAD_POOL_INFO_Y,THREAD_POOL_INFO_WIDTH,THREAD_POOL_INFO_HEIGHT);
+        threadPoolInfo.setBounds(THREAD_POOL_INFO_X, THREAD_POOL_INFO_Y, THREAD_POOL_INFO_WIDTH, THREAD_POOL_INFO_HEIGHT);
         threadPoolInfo.setVisible(false);
         add(threadPoolInfo);
     }
@@ -156,11 +156,11 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable{
     /**
      * Initializes the obtaining of the future result animation area
      */
-    private void initResultGetter(){
+    private void initResultGetter() {
         LOGGER.info("initializing result getter");
         resultGetter = new JLabel();
         resultGetter.setIcon(new ImageIcon("src/main/resources/images/rla.png"));
-        resultGetter.setBounds(RESULT_GETTER_X,RESULT_GETTER_Y,RESULT_GETTER_WIDTH,RESULT_GETTER_HEIGHT);
+        resultGetter.setBounds(RESULT_GETTER_X, RESULT_GETTER_Y, RESULT_GETTER_WIDTH, RESULT_GETTER_HEIGHT);
         resultGetter.setVisible(false);
         add(resultGetter);
     }
@@ -169,10 +169,10 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable{
      * Simulates the attempt of retrieving a Future result while it has not finished being processed. Graphically, it is
      * the left red arrow trying to obtain the result from the thread pool
      */
-    private void attemptGet(){
+    private void attemptGet() {
         LOGGER.info("running attemptGet()...");
         resultGetter.setIcon(new ImageIcon("src/main/resources/images/rla.png"));
-        while(notAvailable()){
+        while (notAvailable()) {
             resultGetter.setVisible(true);
             resultGetter.setVisible(false);
         }
@@ -187,11 +187,11 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable{
      * The code from the code area which enables the behaviour simulated here is highlighted
      */
 
-    private void submitToExecutorService(){
+    private void submitToExecutorService() {
         LOGGER.info("running submitToExecutorService()...");
         codeArea.setText(startExecutionBoldCode);
         taskSubmitterInfo.setVisible(true);
-        animateLeftToRight(taskSubmitter,TASK_SUBMITTER_INFO_X,200,10);
+        animateLeftToRight(taskSubmitter, TASK_SUBMITTER_INFO_X, 200, 10);
     }
 
     /**
@@ -199,7 +199,7 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable{
      * processes attempting to retrieve the Future prematurely
      */
 
-    private void threadPoolComputation(){
+    private void threadPoolComputation() {
         LOGGER.info("running threadPoolComputation");
         codeArea.setText(waitForResultCode);
         threadPool.setVisible(true);
@@ -223,11 +223,11 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable{
      * Starts animation simulating the retrieval of the computed Future result
      * (i.e. the green arrow moving right with the result, starting from the thread pool)
      */
-    private void retrieveResult(){
+    private void retrieveResult() {
         LOGGER.info("running retrieveResult()");
         codeArea.setText(getFutureCode);
         threadPoolInfo.setText("retrieving result");
-        animateLeftToRight(resultGetter,RESULT_GETTER_X,500,10);
+        animateLeftToRight(resultGetter, RESULT_GETTER_X, 500, 10);
         resultGetter.setVisible(false);
     }
 
@@ -277,20 +277,21 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable{
 
     /**
      * Moves a JComponent from left to right by changing its coordinates each 100 milliseconds
-     * @param component JComponent which will move from left to right
+     *
+     * @param component     JComponent which will move from left to right
      * @param startPosition initial pixel position on the X axis
-     * @param endPosition final pixel position on the X axis
-     * @param stepRate how many pixels at a time the object will advance
+     * @param endPosition   final pixel position on the X axis
+     * @param stepRate      how many pixels at a time the object will advance
      */
     @Override
     public void animateLeftToRight(JComponent component, int startPosition, int endPosition, int stepRate) {
-        for(int i=startPosition;i<=endPosition;i+=stepRate){
+        for (int i = startPosition; i <= endPosition; i += stepRate) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 LOGGER.error(e.getMessage());
             }
-            component.setBounds(i,component.getY(),component.getWidth(),component.getHeight());
+            component.setBounds(i, component.getY(), component.getWidth(), component.getHeight());
         }
     }
 

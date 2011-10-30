@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 
-public class TestSwingFrameFuture{
+public class TestSwingFrameFuture {
     private SwingFrameFuture sff;
     private static Properties properties;
     private static Logger logger;
@@ -28,8 +28,8 @@ public class TestSwingFrameFuture{
         try {
             properties.load(new FileInputStream("src/main/resources/FutureCodeProperties"));
         } catch (IOException ex) {
-          logger.error("Properties have not been read due to an IOException. TestSwingFrameFuture failed.");
-          throw new PropertiesNotReadException();
+            logger.error("Properties have not been read due to an IOException. TestSwingFrameFuture failed.");
+            throw new PropertiesNotReadException();
         }
     }
 
