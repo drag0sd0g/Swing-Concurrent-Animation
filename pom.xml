@@ -24,8 +24,6 @@ http://maven.apache.org/maven-v4_0_0.xsd">
                     <target>1.6</target>
                     <showDeprecation>true</showDeprecation>
                     <showWarnings>true</showWarnings>
-                    <fork>true</fork>
-                    <executable>$JAVA_HOME/bin/javac</executable>
                 </configuration>
             </plugin>
             <plugin>
