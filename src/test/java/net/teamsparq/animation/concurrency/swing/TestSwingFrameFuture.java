@@ -20,7 +20,7 @@ public class TestSwingFrameFuture {
     private static Logger logger;
 
     @BeforeClass
-    public static void onlyOnce() {
+    public static void propertiesInitializer() {
         logger = org.apache.log4j.Logger.getLogger(TestSwingFrameFuture.class);
         BasicConfigurator.configure();
         properties = new Properties();
@@ -48,8 +48,8 @@ public class TestSwingFrameFuture {
         assertEquals(SwingFrameFuture.CODE_AREA_WIDTH, sff.getCodeArea().getWidth());
         assertEquals(SwingFrameFuture.CODE_AREA_X, sff.getCodeArea().getX());
         assertEquals(SwingFrameFuture.CODE_AREA_X, sff.getCodeArea().getY());
-        assertTrue(sff.getCodeArea().getHeight() <= SwingFrameFuture.FRAME_HEIGHT);
-        assertTrue(sff.getCodeArea().getWidth() <= SwingFrameFuture.FRAME_WIDTH);
+        assertTrue(sff.getCodeArea().getHeight() <= SwingFrameInterface.FRAME_HEIGHT);
+        assertTrue(sff.getCodeArea().getWidth() <= SwingFrameInterface.FRAME_WIDTH);
     }
 
     @Test
@@ -63,8 +63,8 @@ public class TestSwingFrameFuture {
         assertEquals(SwingFrameFuture.TASK_SUBMITTER_WIDTH, sff.getTaskSubmitter().getWidth());
         assertEquals(SwingFrameFuture.TASK_SUBMITTER_X, sff.getTaskSubmitter().getX());
         assertEquals(SwingFrameFuture.TASK_SUBMITTER_Y, sff.getTaskSubmitter().getY());
-        assertTrue(sff.getTaskSubmitter().getHeight() <= SwingFrameFuture.FRAME_HEIGHT);
-        assertTrue(sff.getTaskSubmitter().getWidth() <= SwingFrameFuture.FRAME_WIDTH);
+        assertTrue(sff.getTaskSubmitter().getHeight() <= SwingFrameInterface.FRAME_HEIGHT);
+        assertTrue(sff.getTaskSubmitter().getWidth() <= SwingFrameInterface.FRAME_WIDTH);
     }
 
     @Test
@@ -78,8 +78,8 @@ public class TestSwingFrameFuture {
         assertEquals(SwingFrameFuture.TASK_SUBMITTER_INFO_WIDTH, sff.getTaskSubmitterInfo().getWidth());
         assertEquals(SwingFrameFuture.TASK_SUBMITTER_INFO_X, sff.getTaskSubmitterInfo().getX());
         assertEquals(SwingFrameFuture.TASK_SUBMITTER_INFO_Y, sff.getTaskSubmitterInfo().getY());
-        assertTrue(sff.getTaskSubmitterInfo().getHeight() <= SwingFrameFuture.FRAME_HEIGHT);
-        assertTrue(sff.getTaskSubmitterInfo().getWidth() <= SwingFrameFuture.FRAME_WIDTH);
+        assertTrue(sff.getTaskSubmitterInfo().getHeight() <= SwingFrameInterface.FRAME_HEIGHT);
+        assertTrue(sff.getTaskSubmitterInfo().getWidth() <= SwingFrameInterface.FRAME_WIDTH);
     }
 
     @Test
@@ -93,8 +93,8 @@ public class TestSwingFrameFuture {
         assertEquals(SwingFrameFuture.THREAD_POOL_WIDTH, sff.getThreadPool().getWidth());
         assertEquals(SwingFrameFuture.THREAD_POOL_X, sff.getThreadPool().getX());
         assertEquals(SwingFrameFuture.THREAD_POOL_Y, sff.getThreadPool().getY());
-        assertTrue(sff.getThreadPool().getHeight() <= SwingFrameFuture.FRAME_HEIGHT);
-        assertTrue(sff.getThreadPool().getWidth() <= SwingFrameFuture.FRAME_WIDTH);
+        assertTrue(sff.getThreadPool().getHeight() <= SwingFrameInterface.FRAME_HEIGHT);
+        assertTrue(sff.getThreadPool().getWidth() <= SwingFrameInterface.FRAME_WIDTH);
     }
 
     @Test
@@ -108,8 +108,8 @@ public class TestSwingFrameFuture {
         assertEquals(SwingFrameFuture.THREAD_POOL_INFO_WIDTH, sff.getThreadPoolInfo().getWidth());
         assertEquals(SwingFrameFuture.THREAD_POOL_INFO_X, sff.getThreadPoolInfo().getX());
         assertEquals(SwingFrameFuture.THREAD_POOL_INFO_Y, sff.getThreadPoolInfo().getY());
-        assertTrue(sff.getThreadPoolInfo().getHeight() <= SwingFrameFuture.FRAME_HEIGHT);
-        assertTrue(sff.getThreadPoolInfo().getWidth() <= SwingFrameFuture.FRAME_WIDTH);
+        assertTrue(sff.getThreadPoolInfo().getHeight() <= SwingFrameInterface.FRAME_HEIGHT);
+        assertTrue(sff.getThreadPoolInfo().getWidth() <= SwingFrameInterface.FRAME_WIDTH);
     }
 
     @Test
@@ -123,8 +123,8 @@ public class TestSwingFrameFuture {
         assertEquals(SwingFrameFuture.RESULT_GETTER_WIDTH, sff.getResultGetter().getWidth());
         assertEquals(SwingFrameFuture.RESULT_GETTER_X, sff.getResultGetter().getX());
         assertEquals(SwingFrameFuture.RESULT_GETTER_Y, sff.getResultGetter().getY());
-        assertTrue(sff.getResultGetter().getHeight() <= SwingFrameFuture.FRAME_HEIGHT);
-        assertTrue(sff.getResultGetter().getWidth() <= SwingFrameFuture.FRAME_WIDTH);
+        assertTrue(sff.getResultGetter().getHeight() <= SwingFrameInterface.FRAME_HEIGHT);
+        assertTrue(sff.getResultGetter().getWidth() <= SwingFrameInterface.FRAME_WIDTH);
     }
 
     @Test
