@@ -98,6 +98,7 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable{
         Properties prop = new Properties();
         try {
             prop.load(new FileInputStream("src/main/resources/FutureCodeProperties"));
+            LOGGER.info("properties file loading succeeded");
             initialCode = prop.getProperty("initialCode");
             startExecutionBoldCode = prop.getProperty("startExecutionBoldCode");
             waitForResultCode = prop.getProperty("waitForResultCode");
