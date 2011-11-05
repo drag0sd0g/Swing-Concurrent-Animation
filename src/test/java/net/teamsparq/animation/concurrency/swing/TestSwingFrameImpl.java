@@ -20,8 +20,8 @@ public class TestSwingFrameImpl {
      * SwingFrameInterface
      */
     public void checkMainFrameBoundaries() {
-        assertEquals(SwingFrameInterface.FRAME_WIDTH, swingFrame.getWidth());
-        assertEquals(SwingFrameInterface.FRAME_HEIGHT, swingFrame.getHeight());
+        assertEquals(SwingFrameImpl.FRAME_WIDTH, swingFrame.getWidth());
+        assertEquals(SwingFrameImpl.FRAME_HEIGHT, swingFrame.getHeight());
     }
 
 }

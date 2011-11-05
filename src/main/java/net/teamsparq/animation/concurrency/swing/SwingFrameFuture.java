@@ -62,6 +62,8 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable {
     private String waitForResultCode;
     private String getFutureCode;
 
+    private static final String propertiesFilePath = "src/main/resources/FutureCodeProperties";
+
     /**
      * Public no-arg constructor
      */
@@ -83,7 +85,7 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable {
      */
     private void init() {
         LOGGER.info("initializing components...");
-        initProperties();
+        initProperties(propertiesFilePath);
         initCodeArea();
         initTaskSubmitter();
         initThreadPool();
@@ -91,20 +93,33 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable {
     }
 
     /**
-     * Initializes properties
+     * Initializes properties. If properties file is not found, a file explorer enables the user to locate it manually
      */
-    private void initProperties() {
+    private void initProperties(String propertiesPath) {
         LOGGER.info("initializing properties...");
         Properties prop = new Properties();
         try {
-            prop.load(new FileInputStream("src/main/resources/FutureCodeProperties"));
+            prop.load(new FileInputStream(propertiesPath));
             LOGGER.info("properties file loading succeeded");
             initialCode = prop.getProperty("initialCode");
+            LOGGER.info("[PROPERTY LOADED] initialCode = "+initialCode);
             startExecutionBoldCode = prop.getProperty("startExecutionBoldCode");
+            LOGGER.info("[PROPERTY LOADED] startExecutionBoldCode = "+startExecutionBoldCode);
             waitForResultCode = prop.getProperty("waitForResultCode");
+            LOGGER.info("[PROPERTY LOADED] waitForResultCode = "+waitForResultCode);
             getFutureCode = prop.getProperty("getFutureCode");
+            LOGGER.info("[PROPERTY LOADED] getFutureCode = "+getFutureCode);
         } catch (IOException ex) {
             LOGGER.error(ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Locate the properties file manually","Properties initialization error", JOptionPane.ERROR_MESSAGE);
+            JFileChooser fileChooser = new JFileChooser();
+            int returnVal = fileChooser.showOpenDialog(this);
+            if (returnVal == JFileChooser.APPROVE_OPTION){
+               initProperties(fileChooser.getSelectedFile().getAbsolutePath());
+            }
+            else if (returnVal == JFileChooser.CANCEL_OPTION) {
+               System.exit(0);
+            }
         }
     }
 
@@ -127,7 +142,7 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable {
     private void initTaskSubmitter() {
         LOGGER.info("initializing task submitter...");
         taskSubmitter = new JLabel();
-        taskSubmitter.setIcon(new ImageIcon("src/main/resources/images/ra.gif"));
+        taskSubmitter.setIcon(new ImageIcon("src/main/resources/ra.gif"));
         taskSubmitter.setBounds(TASK_SUBMITTER_X, TASK_SUBMITTER_Y, TASK_SUBMITTER_WIDTH, TASK_SUBMITTER_HEIGHT);
         taskSubmitter.setVisible(true);
         add(taskSubmitter);
@@ -143,7 +158,7 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable {
     private void initThreadPool() {
         LOGGER.info("initializing thread pool...");
         threadPool = new JLabel();
-        threadPool.setIcon(new ImageIcon("src/main/resources/images/loading.gif"));
+        threadPool.setIcon(new ImageIcon("src/main/resources/loading.gif"));
         threadPool.setBounds(THREAD_POOL_X, THREAD_POOL_Y, THREAD_POOL_WIDTH, THREAD_POOL_HEIGHT);
         threadPool.setVisible(false);
         add(threadPool);
@@ -159,7 +174,7 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable {
     private void initResultGetter() {
         LOGGER.info("initializing result getter");
         resultGetter = new JLabel();
-        resultGetter.setIcon(new ImageIcon("src/main/resources/images/rla.png"));
+        resultGetter.setIcon(new ImageIcon("src/main/resources/rla.png"));
         resultGetter.setBounds(RESULT_GETTER_X, RESULT_GETTER_Y, RESULT_GETTER_WIDTH, RESULT_GETTER_HEIGHT);
         resultGetter.setVisible(false);
         add(resultGetter);
@@ -171,12 +186,12 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable {
      */
     private void attemptGet() {
         LOGGER.info("running attemptGet()...");
-        resultGetter.setIcon(new ImageIcon("src/main/resources/images/rla.png"));
+        resultGetter.setIcon(new ImageIcon("src/main/resources/rla.png"));
         while (notAvailable()) {
             resultGetter.setVisible(true);
             resultGetter.setVisible(false);
         }
-        resultGetter.setIcon(new ImageIcon("src/main/resources/images/ra.gif"));
+        resultGetter.setIcon(new ImageIcon("src/main/resources/ra.gif"));
         resultGetter.setVisible(true);
         taskSubmitter.setVisible(false);
     }
@@ -216,7 +231,7 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable {
             LOGGER.error(e.getMessage());
         }
         available = true;
-        threadPool.setIcon(new ImageIcon("src/main/resources/images/tick.jpg"));
+        threadPool.setIcon(new ImageIcon("src/main/resources/tick.jpg"));
     }
 
     /**
