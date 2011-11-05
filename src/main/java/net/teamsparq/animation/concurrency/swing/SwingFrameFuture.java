@@ -4,7 +4,6 @@ import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -62,7 +61,7 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable {
     private String waitForResultCode;
     private String getFutureCode;
 
-    private static final String propertiesFilePath = "src/main/resources/FutureCodeProperties";
+    private static final String propertiesFilePath = "/FutureCodeProperties";
 
     /**
      * Public no-arg constructor
@@ -99,7 +98,7 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable {
         LOGGER.info("initializing properties...");
         Properties prop = new Properties();
         try {
-            prop.load(new FileInputStream(propertiesPath));
+            prop.load(SwingFrameFuture.class.getResourceAsStream(propertiesPath));
             LOGGER.info("properties file loading succeeded");
             initialCode = prop.getProperty("initialCode");
             LOGGER.info("[PROPERTY LOADED] initialCode = "+initialCode);
@@ -142,7 +141,7 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable {
     private void initTaskSubmitter() {
         LOGGER.info("initializing task submitter...");
         taskSubmitter = new JLabel();
-        taskSubmitter.setIcon(new ImageIcon("src/main/resources/ra.gif"));
+        taskSubmitter.setIcon(new ImageIcon(SwingFrameFuture.class.getResource("/ra.gif")));
         taskSubmitter.setBounds(TASK_SUBMITTER_X, TASK_SUBMITTER_Y, TASK_SUBMITTER_WIDTH, TASK_SUBMITTER_HEIGHT);
         taskSubmitter.setVisible(true);
         add(taskSubmitter);
@@ -158,7 +157,7 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable {
     private void initThreadPool() {
         LOGGER.info("initializing thread pool...");
         threadPool = new JLabel();
-        threadPool.setIcon(new ImageIcon("src/main/resources/loading.gif"));
+        threadPool.setIcon(new ImageIcon(SwingFrameFuture.class.getResource("/loading.gif")));
         threadPool.setBounds(THREAD_POOL_X, THREAD_POOL_Y, THREAD_POOL_WIDTH, THREAD_POOL_HEIGHT);
         threadPool.setVisible(false);
         add(threadPool);
@@ -174,7 +173,7 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable {
     private void initResultGetter() {
         LOGGER.info("initializing result getter");
         resultGetter = new JLabel();
-        resultGetter.setIcon(new ImageIcon("src/main/resources/rla.png"));
+        resultGetter.setIcon(new ImageIcon(SwingFrameFuture.class.getResource("/rla.png")));
         resultGetter.setBounds(RESULT_GETTER_X, RESULT_GETTER_Y, RESULT_GETTER_WIDTH, RESULT_GETTER_HEIGHT);
         resultGetter.setVisible(false);
         add(resultGetter);
@@ -186,12 +185,12 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable {
      */
     private void attemptGet() {
         LOGGER.info("running attemptGet()...");
-        resultGetter.setIcon(new ImageIcon("src/main/resources/rla.png"));
+        resultGetter.setIcon(new ImageIcon(SwingFrameFuture.class.getResource("/rla.png")));
         while (notAvailable()) {
             resultGetter.setVisible(true);
             resultGetter.setVisible(false);
         }
-        resultGetter.setIcon(new ImageIcon("src/main/resources/ra.gif"));
+        resultGetter.setIcon(new ImageIcon(SwingFrameFuture.class.getResource("/ra.gif")));
         resultGetter.setVisible(true);
         taskSubmitter.setVisible(false);
     }
@@ -231,7 +230,7 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable {
             LOGGER.error(e.getMessage());
         }
         available = true;
-        threadPool.setIcon(new ImageIcon("src/main/resources/tick.jpg"));
+        threadPool.setIcon(new ImageIcon(SwingFrameFuture.class.getResource("/tick.jpg")));
     }
 
     /**
