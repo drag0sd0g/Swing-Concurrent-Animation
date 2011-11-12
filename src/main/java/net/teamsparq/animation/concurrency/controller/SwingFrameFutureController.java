@@ -7,6 +7,7 @@ package net.teamsparq.animation.concurrency.controller;
  * Time: 14:26
  * To change this template use File | Settings | File Templates.
  */
+
 import net.teamsparq.animation.concurrency.future.ResultGetter;
 import net.teamsparq.animation.concurrency.future.TaskSubmitter;
 import net.teamsparq.animation.concurrency.future.ThreadPoolComputation;
@@ -29,22 +30,22 @@ public class SwingFrameFutureController {
     private final ThreadPoolComputation threadPoolComputation;
     private final ResultGetter resultGetter;
 
-    public <T> SwingFrameFutureController(FutureTask<T> future){
+    public <T> SwingFrameFutureController(FutureTask<T> future) {
         executorService = Executors.newFixedThreadPool(1);
         taskSubmitter = new TaskSubmitter(executorService, future);
         threadPoolComputation = new ThreadPoolComputation(future);
         resultGetter = new ResultGetter(threadPoolComputation);
     }
 
-    public void submitToExecutorService(){
+    public void submitToExecutorService() {
         taskSubmitter.submitTask();
     }
 
-    public String attemptToRetrieveResult(){
+    public String attemptToRetrieveResult() {
         return resultGetter.attemptGet().toString();
     }
 
-    public boolean isDoneComputing(){
+    public boolean isDoneComputing() {
         return threadPoolComputation.isReady();
     }
 

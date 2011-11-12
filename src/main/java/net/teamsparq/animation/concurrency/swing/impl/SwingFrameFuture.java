@@ -82,8 +82,8 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable {
             @Override
             public Long call() throws Exception {
                 Long sum = new Long(0);
-                for(long i=0;i<1000;i++){
-                    sum+=i;
+                for (long i = 0; i < 1000; i++) {
+                    sum += i;
                     Thread.sleep(10);
                 }
                 return sum;
@@ -119,23 +119,22 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable {
             prop.load(SwingFrameFuture.class.getResourceAsStream(propertiesPath));
             LOGGER.info("properties file loading succeeded");
             initialCode = prop.getProperty("initialCode");
-            LOGGER.info("[PROPERTY LOADED] initialCode = "+initialCode);
+            LOGGER.info("[PROPERTY LOADED] initialCode = " + initialCode);
             startExecutionBoldCode = prop.getProperty("startExecutionBoldCode");
-            LOGGER.info("[PROPERTY LOADED] startExecutionBoldCode = "+startExecutionBoldCode);
+            LOGGER.info("[PROPERTY LOADED] startExecutionBoldCode = " + startExecutionBoldCode);
             waitForResultCode = prop.getProperty("waitForResultCode");
-            LOGGER.info("[PROPERTY LOADED] waitForResultCode = "+waitForResultCode);
+            LOGGER.info("[PROPERTY LOADED] waitForResultCode = " + waitForResultCode);
             getFutureCode = prop.getProperty("getFutureCode");
-            LOGGER.info("[PROPERTY LOADED] getFutureCode = "+getFutureCode);
+            LOGGER.info("[PROPERTY LOADED] getFutureCode = " + getFutureCode);
         } catch (IOException ex) {
             LOGGER.error(ex.getMessage());
-            JOptionPane.showMessageDialog(this, "Locate the properties file manually","Properties initialization error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Locate the properties file manually", "Properties initialization error", JOptionPane.ERROR_MESSAGE);
             JFileChooser fileChooser = new JFileChooser();
             int returnVal = fileChooser.showOpenDialog(this);
-            if (returnVal == JFileChooser.APPROVE_OPTION){
-               initProperties(fileChooser.getSelectedFile().getAbsolutePath());
-            }
-            else if (returnVal == JFileChooser.CANCEL_OPTION) {
-               System.exit(0);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                initProperties(fileChooser.getSelectedFile().getAbsolutePath());
+            } else if (returnVal == JFileChooser.CANCEL_OPTION) {
+                System.exit(0);
             }
         }
     }
@@ -243,7 +242,7 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable {
                 attemptGet();
             }
         }).start();
-        while(controller.isDoneComputing() == false);
+        while (controller.isDoneComputing() == false) ;
         available = true;
         threadPool.setIcon(new ImageIcon(SwingFrameFuture.class.getResource("/tick.jpg")));
     }
@@ -254,7 +253,7 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable {
      */
     private void retrieveResult() {
         LOGGER.info("running retrieveResult()");
-        LOGGER.info("Future is: "+controller.attemptToRetrieveResult());
+        LOGGER.info("Future is: " + controller.attemptToRetrieveResult());
         codeArea.setText(getFutureCode);
         threadPoolInfo.setText("retrieving result");
         animateLeftToRight(resultGetter, RESULT_GETTER_X, 500, 10);

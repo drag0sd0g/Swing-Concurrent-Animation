@@ -7,6 +7,7 @@ package net.teamsparq.animation.concurrency.future;
  * Time: 14:19
  * To change this template use File | Settings | File Templates.
  */
+
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
@@ -22,11 +23,11 @@ public class ThreadPoolComputation<T> {
         this.future = future;
     }
 
-    public boolean isReady(){
+    public boolean isReady() {
         return future.isDone();
     }
 
-    public T getResult() throws InterruptedException, ExecutionException{
+    public T getResult() throws InterruptedException, ExecutionException {
         return future.get();
     }
 }

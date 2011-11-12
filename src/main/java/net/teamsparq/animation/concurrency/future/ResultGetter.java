@@ -7,13 +7,13 @@ package net.teamsparq.animation.concurrency.future;
  * Time: 14:19
  * To change this template use File | Settings | File Templates.
  */
+
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  * Abstraction of the attempt to obtain a future result from a thread pool
- *
  */
 public class ResultGetter<T> {
     private final ThreadPoolComputation<T> threadPoolComputation;
@@ -23,7 +23,7 @@ public class ResultGetter<T> {
     }
 
 
-    public T attemptGet(){
+    public T attemptGet() {
         try {
             return threadPoolComputation.getResult();
         } catch (InterruptedException ex) {

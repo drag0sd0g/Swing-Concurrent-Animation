@@ -7,6 +7,7 @@ package net.teamsparq.animation.concurrency.future;
  * Time: 14:20
  * To change this template use File | Settings | File Templates.
  */
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.FutureTask;
 import java.util.logging.Level;
@@ -25,8 +26,8 @@ public class TaskSubmitter {
         this.future = future;
     }
 
-    public void submitTask(){
-        Logger.getLogger(TaskSubmitter.class.getName()).log(Level.INFO,"submitting future to executor");
+    public void submitTask() {
+        Logger.getLogger(TaskSubmitter.class.getName()).log(Level.INFO, "submitting future to executor");
         executorService.execute(future);
     }
 
