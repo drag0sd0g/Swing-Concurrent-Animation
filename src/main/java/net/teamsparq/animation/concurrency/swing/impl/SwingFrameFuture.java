@@ -15,8 +15,8 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable {
     // code area coordinates
     public static final int CODE_AREA_X = 0;
     public static final int CODE_AREA_Y = 0;
-    public static final int CODE_AREA_WIDTH = 460;
-    public static final int CODE_AREA_HEIGHT = 400;
+    public static final int CODE_AREA_WIDTH = 500;
+    public static final int CODE_AREA_HEIGHT = 405;
 
     // task submitter label coordinates
     public static final int TASK_SUBMITTER_X = 30;
