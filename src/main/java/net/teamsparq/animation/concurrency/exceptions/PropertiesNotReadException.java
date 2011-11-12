@@ -1,4 +1,4 @@
-package net.teamsparq.animation.concurrency.swing;
+package net.teamsparq.animation.concurrency.exceptions;
 
 public class PropertiesNotReadException extends RuntimeException {
     @Override

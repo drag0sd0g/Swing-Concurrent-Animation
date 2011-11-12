@@ -2,6 +2,7 @@ package net.teamsparq.animation.concurrency.swing;
 
 import static junit.framework.Assert.*;
 
+import net.teamsparq.animation.concurrency.swing.impl.SwingFrameImpl;
 import org.junit.Before;
 import org.junit.Test;
 

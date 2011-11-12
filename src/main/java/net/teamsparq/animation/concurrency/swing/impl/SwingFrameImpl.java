@@ -1,4 +1,6 @@
-package net.teamsparq.animation.concurrency.swing;
+package net.teamsparq.animation.concurrency.swing.impl;
+
+import net.teamsparq.animation.concurrency.swing.SwingFrameInterface;
 
 import javax.swing.*;
 

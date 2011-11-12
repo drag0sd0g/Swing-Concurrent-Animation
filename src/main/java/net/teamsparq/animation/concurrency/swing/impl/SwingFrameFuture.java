@@ -1,11 +1,15 @@
-package net.teamsparq.animation.concurrency.swing;
+package net.teamsparq.animation.concurrency.swing.impl;
 
+import net.teamsparq.animation.concurrency.controller.SwingFrameFutureController;
+import net.teamsparq.animation.concurrency.swing.Animatable;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.concurrent.Callable;
+import java.util.concurrent.FutureTask;
 
 public class SwingFrameFuture extends SwingFrameImpl implements Animatable {
     // code area coordinates
@@ -63,6 +67,9 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable {
 
     private static final String propertiesFilePath = "/FutureCodeProperties";
 
+    // Frame controller governing over the chain of actions required to submit, compute and obtain a Future
+    private final SwingFrameFutureController controller;
+
     /**
      * Public no-arg constructor
      */
@@ -71,6 +78,17 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable {
         init();
         setTitle("Future<V> Example");        // set frame title
         available = false;
+        controller = new SwingFrameFutureController(new FutureTask<Long>(new Callable<Long>() {
+            @Override
+            public Long call() throws Exception {
+                Long sum = new Long(0);
+                for(long i=0;i<1000;i++){
+                    sum+=i;
+                    Thread.sleep(10);
+                }
+                return sum;
+            }
+        }));
     }
 
     public void beginAnimation() {
@@ -203,6 +221,7 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable {
 
     private void submitToExecutorService() {
         LOGGER.info("running submitToExecutorService()...");
+        controller.submitToExecutorService();
         codeArea.setText(startExecutionBoldCode);
         taskSubmitterInfo.setVisible(true);
         animateLeftToRight(taskSubmitter, TASK_SUBMITTER_INFO_X, 200, 10);
@@ -224,11 +243,7 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable {
                 attemptGet();
             }
         }).start();
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            LOGGER.error(e.getMessage());
-        }
+        while(controller.isDoneComputing() == false);
         available = true;
         threadPool.setIcon(new ImageIcon(SwingFrameFuture.class.getResource("/tick.jpg")));
     }
@@ -239,6 +254,7 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable {
      */
     private void retrieveResult() {
         LOGGER.info("running retrieveResult()");
+        LOGGER.info("Future is: "+controller.attemptToRetrieveResult());
         codeArea.setText(getFutureCode);
         threadPoolInfo.setText("retrieving result");
         animateLeftToRight(resultGetter, RESULT_GETTER_X, 500, 10);

@@ -31,7 +31,7 @@ http://maven.apache.org/maven-v4_0_0.xsd">
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>net.teamsparq.animation.concurrency.swing.DriverMain</mainClass>
+                            <mainClass>net.teamsparq.animation.concurrency.drivers.DriverMain</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

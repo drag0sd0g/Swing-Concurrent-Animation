@@ -2,6 +2,9 @@ package net.teamsparq.animation.concurrency.swing;
 
 import static junit.framework.Assert.*;
 
+import net.teamsparq.animation.concurrency.exceptions.PropertiesNotReadException;
+import net.teamsparq.animation.concurrency.swing.impl.SwingFrameFuture;
+import net.teamsparq.animation.concurrency.swing.impl.SwingFrameImpl;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.junit.Before;
