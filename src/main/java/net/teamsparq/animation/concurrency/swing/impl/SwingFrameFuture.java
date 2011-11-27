@@ -81,8 +81,8 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable {
         controller = new SwingFrameFutureController(new FutureTask<Long>(new Callable<Long>() {
             @Override
             public Long call() throws Exception {
-                Long sum = new Long(0);
-                for (long i = 0; i < 1000; i++) {
+                Long sum = new Long(0L);
+                for (Long i = 0L; i < 1000L; i++) {
                     sum += i;
                     Thread.sleep(10);
                 }
@@ -116,27 +116,40 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable {
         LOGGER.info("initializing properties...");
         Properties prop = new Properties();
         try {
-            prop.load(SwingFrameFuture.class.getResourceAsStream(propertiesPath));
-            LOGGER.info("properties file loading succeeded");
-            initialCode = prop.getProperty("initialCode");
-            LOGGER.info("[PROPERTY LOADED] initialCode = " + initialCode);
-            startExecutionBoldCode = prop.getProperty("startExecutionBoldCode");
-            LOGGER.info("[PROPERTY LOADED] startExecutionBoldCode = " + startExecutionBoldCode);
-            waitForResultCode = prop.getProperty("waitForResultCode");
-            LOGGER.info("[PROPERTY LOADED] waitForResultCode = " + waitForResultCode);
-            getFutureCode = prop.getProperty("getFutureCode");
-            LOGGER.info("[PROPERTY LOADED] getFutureCode = " + getFutureCode);
+            loadProperties(prop,propertiesPath);
+            logProperties();
         } catch (IOException ex) {
             LOGGER.error(ex.getMessage());
-            JOptionPane.showMessageDialog(this, "Locate the properties file manually", "Properties initialization error", JOptionPane.ERROR_MESSAGE);
-            JFileChooser fileChooser = new JFileChooser();
-            int returnVal = fileChooser.showOpenDialog(this);
-            if (returnVal == JFileChooser.APPROVE_OPTION) {
-                initProperties(fileChooser.getSelectedFile().getAbsolutePath());
-            } else if (returnVal == JFileChooser.CANCEL_OPTION) {
-                System.exit(0);
-            }
+            getPropertiesManually();
         }
+    }
+
+    private void loadProperties(Properties prop,String propertiesPath)throws IOException{
+        prop.load(SwingFrameFuture.class.getResourceAsStream(propertiesPath));
+        initialCode = prop.getProperty("initialCode");
+        startExecutionBoldCode = prop.getProperty("startExecutionBoldCode");
+        waitForResultCode = prop.getProperty("waitForResultCode");
+        getFutureCode = prop.getProperty("getFutureCode");
+
+    }
+
+    private void logProperties(){
+        LOGGER.debug("initialCode property: "+initialCode);
+        LOGGER.debug("startExecutionBoldCode property: "+startExecutionBoldCode);
+        LOGGER.debug("waitForResultCode property: "+waitForResultCode);
+        LOGGER.debug("getFutureCode property: "+getFutureCode);
+    }
+
+    private void getPropertiesManually(){
+        JOptionPane.showMessageDialog(this, "Locate the properties file manually", "Properties initialization error", JOptionPane.ERROR_MESSAGE);
+        JFileChooser fileChooser = new JFileChooser();
+        int returnVal = fileChooser.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            initProperties(fileChooser.getSelectedFile().getAbsolutePath());
+        } else if (returnVal == JFileChooser.CANCEL_OPTION) {
+            System.exit(0);
+        }
+
     }
 
     /**

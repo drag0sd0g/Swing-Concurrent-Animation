@@ -8,6 +8,10 @@ package net.teamsparq.animation.concurrency.future;
  * To change this template use File | Settings | File Templates.
  */
 
+import javax.lang.model.element.TypeParameterElement;
+import java.lang.reflect.Field;
+import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,21 +21,28 @@ import java.util.logging.Logger;
  */
 public class ResultGetter<T> {
     private final ThreadPoolComputation<T> threadPoolComputation;
+    public T result;
 
     public ResultGetter(ThreadPoolComputation<T> threadPool) {
         this.threadPoolComputation = threadPool;
+        result = null;
     }
 
 
     public T attemptGet() {
         try {
-            return threadPoolComputation.getResult();
+            result = threadPoolComputation.getResult();
+            return result;
         } catch (InterruptedException ex) {
             Logger.getLogger(ResultGetter.class.getName()).log(Level.SEVERE, "current thread was interrupted while waiting", ex);
         } catch (ExecutionException ex) {
             Logger.getLogger(ResultGetter.class.getName()).log(Level.SEVERE, "computation threw an exception", ex);
         }
-        return null;
+        return result;
+    }
+
+    public Class getResultGetterType() throws ClassNotFoundException, NoSuchFieldException {
+        return result.getClass();
     }
 
 }
