@@ -23,7 +23,7 @@ public class TestSwingFrameFuture {
     private static Logger logger;
 
     @BeforeClass
-    public static void propertiesInitializer() {
+    public static void propertiesInitializer() throws PropertiesNotReadException {
         logger = org.apache.log4j.Logger.getLogger(TestSwingFrameFuture.class);
         BasicConfigurator.configure();
         properties = new Properties();

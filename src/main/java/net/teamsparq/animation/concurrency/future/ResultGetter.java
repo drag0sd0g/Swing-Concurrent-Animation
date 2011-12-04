@@ -1,17 +1,5 @@
 package net.teamsparq.animation.concurrency.future;
 
-/**
- * Created by IntelliJ IDEA.
- * User: dragos
- * Date: 12/11/11
- * Time: 14:19
- * To change this template use File | Settings | File Templates.
- */
-
-import javax.lang.model.element.TypeParameterElement;
-import java.lang.reflect.Field;
-import java.lang.reflect.Type;
-import java.lang.reflect.TypeVariable;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

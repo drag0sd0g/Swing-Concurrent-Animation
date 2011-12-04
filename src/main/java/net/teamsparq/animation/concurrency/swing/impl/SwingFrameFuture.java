@@ -91,6 +91,9 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable {
         }));
     }
 
+    /**
+     * Starts the future-logic simulation
+     */
     public void beginAnimation() {
         this.submitToExecutorService();
         this.threadPoolComputation();
@@ -124,6 +127,10 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable {
         }
     }
 
+
+    /**
+     * Loads properties from the given path and populates this class' fields
+     */
     private void loadProperties(Properties prop,String propertiesPath)throws IOException{
         prop.load(SwingFrameFuture.class.getResourceAsStream(propertiesPath));
         initialCode = prop.getProperty("initialCode");
@@ -133,6 +140,9 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable {
 
     }
 
+    /**
+     * logs the 4 stages of the code area (each having the current future-logic executing part in bold)
+     */
     private void logProperties(){
         LOGGER.debug("initialCode property: "+initialCode);
         LOGGER.debug("startExecutionBoldCode property: "+startExecutionBoldCode);
@@ -140,6 +150,10 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable {
         LOGGER.debug("getFutureCode property: "+getFutureCode);
     }
 
+
+    /**
+     * opens a file chooser dialog to manually select the properties file
+     */
     private void getPropertiesManually(){
         JOptionPane.showMessageDialog(this, "Locate the properties file manually", "Properties initialization error", JOptionPane.ERROR_MESSAGE);
         JFileChooser fileChooser = new JFileChooser();
@@ -273,46 +287,90 @@ public class SwingFrameFuture extends SwingFrameImpl implements Animatable {
         resultGetter.setVisible(false);
     }
 
+    /**
+     * checks whether the boolean 'available' field is (still) set to false
+     * @return 'available' field
+     */
     private boolean notAvailable() {
         return available == false;
     }
 
+    /**
+     * getter method
+     * @return 'codeArea' field
+     */
     public JEditorPane getCodeArea() {
         return codeArea;
     }
 
+    /**
+     * getter method
+     * @return 'threadPool' field
+     */
     public JLabel getThreadPool() {
         return threadPool;
     }
 
+    /**
+     * getter method
+     * @return 'threadPoolInfo' field
+     */
     public JLabel getThreadPoolInfo() {
         return threadPoolInfo;
     }
 
+    /**
+     * getter method
+     * @return 'resultGetter' field
+     */
     public JLabel getResultGetter() {
         return resultGetter;
     }
 
+    /**
+     * getter method
+     * @return 'taskSubmitterInfo' field
+     */
     public JLabel getTaskSubmitterInfo() {
         return taskSubmitterInfo;
     }
 
+    /**
+     * getter method
+     * @return 'taskSubmitter' field
+     */
     public JLabel getTaskSubmitter() {
         return taskSubmitter;
     }
 
+    /**
+     * getter method
+     * @return 'initialCode' field
+     */
     public String getInitialCode() {
         return initialCode;
     }
 
+    /**
+     * getter method
+     * @return 'startExecutionBoldCode' field
+     */
     public String getStartExecutionBoldCode() {
         return startExecutionBoldCode;
     }
 
+    /**
+     * getter method
+     * @return 'waitForResultCode' field
+     */
     public String getWaitForResultCode() {
         return waitForResultCode;
     }
 
+    /**
+     * getter method
+     * @return 'getFutureCode' field
+     */
     public String getGetFutureCode() {
         return getFutureCode;
     }

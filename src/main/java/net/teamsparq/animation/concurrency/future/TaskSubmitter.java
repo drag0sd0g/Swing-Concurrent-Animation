@@ -1,13 +1,5 @@
 package net.teamsparq.animation.concurrency.future;
 
-/**
- * Created by IntelliJ IDEA.
- * User: dragos
- * Date: 12/11/11
- * Time: 14:20
- * To change this template use File | Settings | File Templates.
- */
-
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.FutureTask;
 import java.util.logging.Level;
