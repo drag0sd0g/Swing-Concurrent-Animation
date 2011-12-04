@@ -48,6 +48,7 @@ public class ResultGetterTest {
         resultGetter = new ResultGetter<Long>(threadPoolComputation);
         resultGetter.attemptGet();
         LOGGER.debug("result Getter type "+resultGetter.getResultGetterType().getSimpleName());
+
         assertEquals("Long",resultGetter.getResultGetterType().getSimpleName());
 
 
